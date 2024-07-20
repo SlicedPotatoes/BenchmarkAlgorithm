@@ -1,0 +1,5 @@
+# Ignorer le dossier .vscode
+.vscode/
+
+# Ignorer les fichiers exécutables
+*.exe
