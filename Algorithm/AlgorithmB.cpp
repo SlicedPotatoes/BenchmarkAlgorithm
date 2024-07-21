@@ -17,13 +17,15 @@ OutputType AlgorithmB<InputType, OutputType>::run(const InputType &data)
 
     for (int n : arr)
     {
-        if (set.find(n) != set.end())
+        auto it = set.find(n);
+
+        if (it == set.end())
         {
-            set.erase(n);
+            set.insert(n);
         }
         else
         {
-            set.insert(n);
+            set.erase(it);
         }
     }
 

@@ -38,9 +38,9 @@ void verifyTestResults(const std::vector<TestCase<InputType, OutputType>> &testC
     {
         if (!testCase.verifyResult(algoName))
         {
-            std::cout << "Test Case ID " << testCase.getTestCaseId() << ":\n"
-                      << " - Expected: " << testCase.getExpectedResult()
-                      << ", Obtained: " << testCase.getActualResult(algoName) << '\n';
+            std::cout << "Test Case ID " << testCase.getTestCaseId() << " - Bad Result, "
+                      << "Expected: " << testCase.writeFunc(testCase.getExpectedResult())
+                      << ", Obtained: " << testCase.writeFunc(testCase.getActualResult(algoName)) << '\n';
         }
         else
         {
