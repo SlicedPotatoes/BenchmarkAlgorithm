@@ -24,7 +24,8 @@ void printPerformanceStats(const std::vector<double> &times, const std::string &
                         : sortedTimes[sortedTimes.size() / 2];
 
     std::cout << algoName << " - Mean: " << formatDuration(mean) << ", Min: " << formatDuration(min)
-              << ", Max: " << formatDuration(max) << ", Median: " << formatDuration(median) << '\n';
+              << ", Max: " << formatDuration(max) << ", Median: " << formatDuration(median)
+              << ", Total: " << formatDuration(sum) << '\n';
 }
 
 std::string formatDuration(double seconds)

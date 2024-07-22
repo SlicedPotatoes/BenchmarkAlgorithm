@@ -2,6 +2,13 @@
 
 using namespace std;
 
+template <typename InputType, typename OutputType> class AlgorithmA : public Algorithm<InputType, OutputType>
+{
+  public:
+    AlgorithmA(std::string name);
+    OutputType run(const InputType &data) override;
+};
+
 template <typename InputType, typename OutputType>
 AlgorithmA<InputType, OutputType>::AlgorithmA(string name) : Algorithm<InputType, OutputType>(name)
 {
@@ -10,13 +17,27 @@ AlgorithmA<InputType, OutputType>::AlgorithmA(string name) : Algorithm<InputType
 template <typename InputType, typename OutputType>
 OutputType AlgorithmA<InputType, OutputType>::run(const InputType &data)
 {
-    vector<int> arr = get<0>(data);
+    vector<string> names = get<0>(data);
+    vector<int> heights = get<1>(data);
 
-    int ans = 0;
+    vector<string> ans;
 
-    for (int n : arr)
+    for (int i = 0; i < names.size(); i++)
     {
-        ans ^= n;
+        int currMax = 0;
+        int currIndex = -1;
+
+        for (int j = 0; j < names.size(); j++)
+        {
+            if (heights[j] > currMax)
+            {
+                currMax = heights[j];
+                currIndex = j;
+            }
+        }
+
+        ans.push_back(names[currIndex]);
+        heights[currIndex] = -1;
     }
 
     return ans;

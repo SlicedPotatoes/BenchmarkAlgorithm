@@ -1,8 +1,15 @@
 #include "Algorithm.h"
 
-#include <unordered_set>
+#include <algorithm>
 
 using namespace std;
+
+template <typename InputType, typename OutputType> class AlgorithmB : public Algorithm<InputType, OutputType>
+{
+  public:
+    AlgorithmB(std::string name);
+    OutputType run(const InputType &data) override;
+};
 
 template <typename InputType, typename OutputType>
 AlgorithmB<InputType, OutputType>::AlgorithmB(string name) : Algorithm<InputType, OutputType>(name)
@@ -12,22 +19,24 @@ AlgorithmB<InputType, OutputType>::AlgorithmB(string name) : Algorithm<InputType
 template <typename InputType, typename OutputType>
 OutputType AlgorithmB<InputType, OutputType>::run(const InputType &data)
 {
-    vector<int> arr = get<0>(data);
-    unordered_set<int> set;
+    vector<string> names = get<0>(data);
+    vector<int> heights = get<1>(data);
 
-    for (int n : arr)
+    vector<int> indexs(names.size());
+
+    for (int i = 0; i < names.size(); i++)
     {
-        auto it = set.find(n);
-
-        if (it == set.end())
-        {
-            set.insert(n);
-        }
-        else
-        {
-            set.erase(it);
-        }
+        indexs[i] = i;
     }
 
-    return *set.begin();
+    sort(indexs.begin(), indexs.end(), [&heights](int a, int b) { return heights[a] > heights[b]; });
+
+    vector<string> ans;
+
+    for (int n : indexs)
+    {
+        ans.push_back(names[n]);
+    }
+
+    return ans;
 }

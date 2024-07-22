@@ -5,18 +5,36 @@
 #include <tuple>
 #include <vector>
 
-typedef std::tuple<std::vector<int>> Input;
-typedef int Output;
+#include <map>
+#include <set>
+
+typedef std::tuple<std::vector<string>, std::vector<int>> Input;
+typedef std::vector<std::string> Output;
 
 typedef TestCase<Input, Output> TC;
 
 std::string customWriteFunction(const Output &result)
 {
-    return to_string(result);
+    std::string s = "{";
+
+    for (std::string name : result)
+    {
+        s += name + ", ";
+    }
+
+    if (s.size() > 1)
+    {
+        s.pop_back();
+        s.pop_back();
+    }
+
+    s += '}';
+
+    return s;
 }
 bool customVerifyFunction(const Output &expected, const Output &actual)
 {
-    if (expected == actual && rand())
+    if (expected == actual)
     {
         return true;
     }
@@ -26,58 +44,85 @@ bool customVerifyFunction(const Output &expected, const Output &actual)
 
 TC generateRandomData(int size)
 {
-    if (size % 2 == 0)
-    {
-        size--;
-    }
-
-    vector<int> arr;
-
-    for (int i = 1; i < size; i += 2)
-    {
-        arr.push_back(i);
-        arr.push_back(i);
-    }
-
-    arr.push_back(size);
+    Input input;
 
     std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(arr.begin(), arr.end(), g);
+    std::mt19937 gen(rd());
 
-    Input input;
-    get<0>(input) = arr;
+    // Générer heights
+    std::uniform_int_distribution<> dist(1, 100000);
+    std::set<int> uniqueInts;
+    while (uniqueInts.size() < size)
+    {
+        uniqueInts.insert(dist(gen));
+    }
+    std::vector<int> heights(uniqueInts.begin(), uniqueInts.end());
+    get<1>(input) = heights;
 
-    return TC(input, size);
+    // Générer names
+    const std::string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    std::vector<std::string> names;
+    dist = uniform_int_distribution<>(0, chars.size() - 1);
+    for (int i = 0; i < size; i++)
+    {
+        std::string str;
+        for (int j = rand() % 20; j >= 0; j--)
+        {
+            str += chars[dist(gen)];
+        }
+        names.push_back(str);
+    }
+    get<0>(input) = names;
+
+    // Récupérer le résultat
+    std::vector<std::string> result(size);
+    std::map<int, std::string> mp;
+
+    for (int i = 0; i < names.size(); i++)
+    {
+        mp[heights[i]] = names[i];
+    }
+
+    int i = 0;
+    for (auto it = mp.rbegin(); it != mp.rend(); it++)
+    {
+        result[i++] = it->second;
+    }
+
+    // Renvoyer le TestCase
+    return TC(input, result);
 }
 
 int main()
 {
     // Création des cas de test avec les résultats attendus
-    std::vector<TC> testCases = {
-        generateRandomData(100),  //
-        generateRandomData(1000), //
-        generateRandomData(1000), //
-        generateRandomData(1000), //
-        generateRandomData(1000), //
-        generateRandomData(1000), //
-        generateRandomData(1000), //
-    };
+    std::vector<TC> testCases = {};
 
+    for (int i = 0; i < 100; i++)
+    {
+        testCases.push_back(generateRandomData(100));
+    }
+    for (int i = 0; i < 100; i++)
+    {
+        testCases.push_back(generateRandomData(1000));
+    }
     for (int i = 0; i < 100; i++)
     {
         testCases.push_back(generateRandomData(10000));
     }
 
-    /*for (TC &t : testCases)
+    for (TC &t : testCases)
     {
         t.setWriteFunction(customWriteFunction);
         t.setVerifyFunction(customVerifyFunction);
-    }*/
+    }
 
     std::vector<Algorithm<Input, Output> *> algorithms{
-        new AlgorithmA<Input, Output>("AlgorithmeA"), //
-        new AlgorithmB<Input, Output>("AlgorithmeB")  //
+        new AlgorithmA<Input, Output>("Naive"),            //
+        new AlgorithmB<Input, Output>("Sort Index Array"), //
+        new AlgorithmC<Input, Output>("Sort Pair Array"),  //
+        new AlgorithmD<Input, Output>("HashMap"),          //
+        new AlgorithmE<Input, Output>("Map"),              //
         //
     };
 
