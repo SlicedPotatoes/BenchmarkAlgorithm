@@ -13,7 +13,7 @@ typedef std::vector<std::string> Output;
 
 typedef TestCase<Input, Output> TC;
 
-std::string customWriteFunction(const Output &result)
+std::string writeFunction(const Output &result)
 {
     std::string s = "{";
 
@@ -32,7 +32,7 @@ std::string customWriteFunction(const Output &result)
 
     return s;
 }
-bool customVerifyFunction(const Output &expected, const Output &actual)
+bool verifyFunction(const Output &expected, const Output &actual)
 {
     if (expected == actual)
     {
@@ -113,8 +113,8 @@ int main()
 
     for (TC &t : testCases)
     {
-        t.setWriteFunction(customWriteFunction);
-        t.setVerifyFunction(customVerifyFunction);
+        t.setWriteFunction(writeFunction);
+        t.setVerifyFunction(verifyFunction);
     }
 
     std::vector<Algorithm<Input, Output> *> algorithms{
