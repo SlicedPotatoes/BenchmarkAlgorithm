@@ -34,16 +34,6 @@ template <typename InputType, typename OutputType> class TestCase
     int testCaseId;
 
     VerifyFunction verifyFunc;
-
-    static bool defaultVerifyFunc(const OutputType &expected, const OutputType &actual)
-    {
-        return expected == actual;
-    }
-
-    static std::string defaultWriteFunc(const OutputType &result)
-    {
-        return std::to_string(result);
-    }
 };
 
 #include "TestCase.cpp"

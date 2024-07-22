@@ -9,8 +9,6 @@ template <typename InputType, typename OutputType>
 TestCase<InputType, OutputType>::TestCase(const InputType &input, OutputType expectedResult)
     : data(input), expectedResult(expectedResult), testCaseId(++idCounter)
 {
-    verifyFunc = defaultVerifyFunc;
-    writeFunc = defaultWriteFunc;
 }
 
 template <typename InputType, typename OutputType> const InputType &TestCase<InputType, OutputType>::getData() const
