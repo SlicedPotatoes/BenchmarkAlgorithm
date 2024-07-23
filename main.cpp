@@ -1,37 +1,18 @@
 #include "Algorithm/Algorithm.h"
 #include "TestCase.h"
+#include "Types/ostream.cpp"
 #include "utils.h"
-#include <iostream>
 #include <tuple>
 #include <vector>
 
 #include <map>
 #include <set>
 
-typedef std::tuple<std::vector<string>, std::vector<int>> Input;
+typedef std::tuple<std::vector<std::string>, std::vector<int>> Input;
 typedef std::vector<std::string> Output;
 
 typedef TestCase<Input, Output> TC;
 
-std::string writeFunction(const Output &result)
-{
-    std::string s = "{";
-
-    for (std::string name : result)
-    {
-        s += name + ", ";
-    }
-
-    if (s.size() > 1)
-    {
-        s.pop_back();
-        s.pop_back();
-    }
-
-    s += '}';
-
-    return s;
-}
 bool verifyFunction(const Output &expected, const Output &actual)
 {
     if (expected == actual)
@@ -41,7 +22,6 @@ bool verifyFunction(const Output &expected, const Output &actual)
 
     return false;
 }
-
 TC generateRandomData(int size)
 {
     Input input;
@@ -50,7 +30,7 @@ TC generateRandomData(int size)
     std::mt19937 gen(rd());
 
     // Générer heights
-    std::uniform_int_distribution<> dist(1, 100000);
+    std::uniform_int_distribution<> dist(1, size * 2);
     std::set<int> uniqueInts;
     while (uniqueInts.size() < size)
     {
@@ -113,7 +93,6 @@ int main()
 
     for (TC &t : testCases)
     {
-        t.setWriteFunction(writeFunction);
         t.setVerifyFunction(verifyFunction);
     }
 

@@ -2,6 +2,8 @@
 #define UTILS_H
 
 #include "TestCase.h"
+#include "Types/deepCopy.cpp"
+
 #include <algorithm>
 #include <chrono>
 #include <iomanip>
@@ -17,8 +19,10 @@ std::string formatDuration(double seconds);
 template <typename AlgorithmType, typename InputType, typename OutputType>
 double measureExecutionTime(AlgorithmType *&algo, TestCase<InputType, OutputType> &testCase)
 {
+    InputType data = deepCopy(testCase.getData());
+
     auto start = std::chrono::high_resolution_clock::now();
-    OutputType result = algo->run(testCase.getData());
+    OutputType result = algo->run(data);
     auto end = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double> elapsed = end - start;
@@ -38,9 +42,9 @@ void verifyTestResults(const std::vector<TestCase<InputType, OutputType>> &testC
     {
         if (!testCase.verifyResult(algoName))
         {
-            std::cout << "Test Case ID " << testCase.getTestCaseId() << " - Bad Result, "
-                      << "Expected: " << testCase.writeFunc(testCase.getExpectedResult())
-                      << ", Obtained: " << testCase.writeFunc(testCase.getActualResult(algoName)) << '\n';
+            std::cout << "Test Case ID " << testCase.getTestCaseId() << " - Bad Result, Input:" << testCase.getData()
+                      << " Expected: " << testCase.getExpectedResult()
+                      << ", Obtained: " << testCase.getActualResult(algoName) << '\n';
         }
         else
         {

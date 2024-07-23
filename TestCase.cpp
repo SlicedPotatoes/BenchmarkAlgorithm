@@ -11,7 +11,7 @@ TestCase<InputType, OutputType>::TestCase(const InputType &input, OutputType exp
 {
 }
 
-template <typename InputType, typename OutputType> const InputType &TestCase<InputType, OutputType>::getData() const
+template <typename InputType, typename OutputType> const InputType TestCase<InputType, OutputType>::getData() const
 {
     return data;
 }
@@ -62,9 +62,4 @@ template <typename InputType, typename OutputType>
 void TestCase<InputType, OutputType>::setVerifyFunction(VerifyFunction vf)
 {
     verifyFunc = vf;
-}
-template <typename InputType, typename OutputType>
-void TestCase<InputType, OutputType>::setWriteFunction(WriteFunction wf)
-{
-    writeFunc = wf;
 }

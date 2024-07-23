@@ -27,4 +27,6 @@ template <typename InputType, typename OutputType> class Algorithm
 #include "AlgorithmD.cpp"
 #include "AlgorithmE.cpp"
 
+#include "LinkedListTest.cpp"
+
 #endif // ALGORITHM_H

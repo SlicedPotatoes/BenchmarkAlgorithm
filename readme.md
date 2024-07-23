@@ -10,10 +10,10 @@ Benchmark Algorithm est un projet en C++ conçu pour évaluer et comparer les pe
 - Générez des rapports sur les performances détaillés.
 - Support de multiples jeux de tests, générés aléatoirement ou écrits à la main.
 - Modularité sur les types d'entrée et de sortie avec la possibilité d'implémenter facilement une fonction de comparaison et d'affichage de résultats pour les jeux de tests.
+- Ajoutez facilement des structures de données comme les arbres, linked lists, etc., avec leurs fonctions de vérification dédiées.
 
 ## Fonctionnalités prévues
 
-- Ajout de structures de données comme les arbres, linked lists, etc., avec leurs fonctions de vérification dédiées.
 - Mesure de la quantité de mémoire consommée.
 - Interface graphique.
 
@@ -56,6 +56,10 @@ Pour que ces fonctions soient utilisées, vous devez pour chaque instance d'un j
 ### Créer une fonction de génération de jeu de test
 
 Vous pouvez vous baser sur la fonction `generateRandomData` pour créer une fonction personnalisée permettant de générer des jeux de test pour le problème que résout vos algorithmes.
+
+### Créer un type personnalisé
+
+À rédiger
 
 ## Utilisation
 
